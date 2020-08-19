@@ -8,6 +8,8 @@ from django.utils.deprecation import MiddlewareMixin
 from corsheaders.conf import conf
 from corsheaders.signals import check_request_enabled
 
+from django.utils.decorators import sync_only_middleware
+
 ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin"
 ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers"
 ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials"
@@ -36,6 +38,7 @@ class CorsPostCsrfMiddleware(MiddlewareMixin):
         return None
 
 
+@sync_only_middleware
 class CorsMiddleware(MiddlewareMixin):
     def _https_referer_replace(self, request):
         """
